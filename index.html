@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Vídeos Viva+ - Desafio Viva+</title>
+    <meta name="description" content="Portal de Vídeos do Desafio Viva+">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 50%, #f0f9ff 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: #b2f5ea;
+            margin-bottom: 1.5rem;
+        }
+
+        .header .description {
+            font-size: 1.1rem;
+            color: #ccfbf1;
+            max-width: 48rem;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .categories {
+            margin-bottom: 2rem;
+        }
+
+        .categories h2 {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-filter {
+            display: none;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-btn:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .category-filter:checked + .category-btn {
+            background: #0d9488;
+            color: white;
+            border-color: #0d9488;
+        }
+
+        .category-btn h3 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .category-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .badge-padrao {
+            background: #059669;
+            color: white;
+        }
+
+        .badge-bonificador {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .badge-penalizador {
+            background: #ef4444;
+            color: white;
+        }
+
+        .badge-geral {
+            background: #6b7280;
+            color: white;
+        }
+
+        .badge-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        /* Video Player Section */
+        .video-player-section {
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .video-player-card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .video-iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-category-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .video-category-icon {
+            font-size: 1.5rem;
+        }
+
+        .video-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-description {
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .video-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .video-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Videos Grid */
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .video-card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            background: linear-gradient(135deg, #b2f5ea 0%, #dbeafe 100%);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .play-button {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+
+        .video-card:hover .play-button {
+            transform: scale(1.1);
+        }
+
+        .play-icon {
+            width: 24px;
+            height: 24px;
+            color: #0d9488;
+        }
+
+        .thumbnail-category {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            font-size: 1.5rem;
+        }
+
+        .thumbnail-duration {
+            position: absolute;
+            bottom: 0.75rem;
+            right: 0.75rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .video-card-content {
+            padding: 1rem;
+        }
+
+        .video-card-category {
+            margin-bottom: 0.5rem;
+        }
+
+        .video-card-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-card-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.75rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+        }
+
+        .video-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .video-card-date {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .watch-btn {
+            background: #0d9488;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: background 0.2s;
+        }
+
+        .watch-btn:hover {
+            background: #0f766e;
+        }
+
+        /* Category filtering with CSS only */
+        .video-card {
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        /* Show all items when "Todos" is selected (default) */
+        #filter-todos:checked ~ .content-wrapper .video-card {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Show only specific category items */
+        #filter-padrao:checked ~ .content-wrapper .video-card[data-category="padrao"] {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #filter-bonificador:checked ~ .content-wrapper .video-card[data-category="bonificador"] {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #filter-penalizador:checked ~ .content-wrapper .video-card[data-category="penalizador"] {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #filter-geral:checked ~ .content-wrapper .video-card[data-category="geral"] {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            display: none;
+        }
+
+        .empty-state.show {
+            display: block;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-description {
+            color: #6b7280;
+        }
+
+        /* Links section */
+        .links-section {
+            margin-top: 3rem;
+            background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+            color: white;
+            border-radius: 0.75rem;
+            padding: 2rem;
+        }
+
+        .links-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .links-section .subtitle {
+            color: #b2f5ea;
+            margin-bottom: 1.5rem;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .link-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+
+        .link-item h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .link-item p {
+            font-size: 0.875rem;
+            color: #b2f5ea;
+            margin-bottom: 0.75rem;
+        }
+
+        .link-btn {
+            background: white;
+            color: #0d9488;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .link-btn:hover {
+            background: #f3f4f6;
+            transform: translateY(-1px);
+        }
+
+        .footer {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer p {
+            color: #9ca3af;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header .subtitle {
+                font-size: 1.25rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .video-iframe {
+                height: 250px;
+            }
+
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>📺 Portal de Vídeos Viva+</h1>
+        <p class="subtitle">Conteúdo educativo para maximizar seus resultados no programa</p>
+        <p class="description">
+            Assista aos vídeos tutoriais e dicas práticas para aproveitar ao máximo o Desafio Viva+
+        </p>
+    </div>
+
+    <div class="container">
+        <!-- Category Filter Inputs -->
+        <input type="radio" name="category" id="filter-todos" class="category-filter" checked>
+        <input type="radio" name="category" id="filter-padrao" class="category-filter">
+        <input type="radio" name="category" id="filter-bonificador" class="category-filter">
+        <input type="radio" name="category" id="filter-penalizador" class="category-filter">
+        <input type="radio" name="category" id="filter-geral" class="category-filter">
+
+        <!-- Category Filter Labels -->
+        <div class="categories">
+            <h2>Categorias de Vídeos</h2>
+            <div class="categories-grid">
+                <label for="filter-todos" class="category-btn">
+                    <div class="category-icon">📚</div>
+                    <h3>Todos</h3>
+                    <span class="badge badge-secondary">6</span>
+                </label>
+                
+                <label for="filter-padrao" class="category-btn">
+                    <div class="category-icon">🏃</div>
+                    <h3>Indicadores Padrão</h3>
+                    <span class="badge badge-padrao">2</span>
+                </label>
+                
+                <label for="filter-bonificador" class="category-btn">
+                    <div class="category-icon">🏆</div>
+                    <h3>Bonificadores</h3>
+                    <span class="badge badge-bonificador">2</span>
+                </label>
+                
+                <label for="filter-penalizador" class="category-btn">
+                    <div class="category-icon">⚠️</div>
+                    <h3>Penalizadores</h3>
+                    <span class="badge badge-penalizador">1</span>
+                </label>
+                
+                <label for="filter-geral" class="category-btn">
+                    <div class="category-icon">📺</div>
+                    <h3>Conteúdo Geral</h3>
+                    <span class="badge badge-geral">1</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Content wrapper for filtering -->
+        <div class="content-wrapper">
+            <!-- Video Player Section -->
+            <div class="video-player-section" id="video-player">
+                <div class="video-player-card">
+                    <iframe id="video-iframe" class="video-iframe" src="" title="Video Player" frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                    <div class="video-info">
+                        <div class="video-category-info">
+                            <span class="video-category-icon" id="player-category-icon">🏃</span>
+                            <span class="badge badge-padrao" id="player-badge">Padrão</span>
+                        </div>
+                        <h3 class="video-title" id="player-title">Título do Vídeo</h3>
+                        <p class="video-description" id="player-description">Descrição do vídeo</p>
+                        <div class="video-meta">
+                            <div class="video-meta-item">
+                                <span>▶️</span>
+                                <span id="player-duration">0:00</span>
+                            </div>
+                            <div class="video-meta-item">
+                                <span>📅</span>
+                                <span id="player-date">Data</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Videos Grid -->
+            <div class="videos-grid">
+                <!-- Video 1 -->
+                <div class="video-card" data-category="padrao" 
+                     data-title="Como Registrar Atividades Físicas"
+                     data-description="Tutorial completo sobre como registrar suas atividades físicas no aplicativo Viva+"
+                     data-embed="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                     data-duration="5:30"
+                     data-date="2024-01-15">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-category">🏃</div>
+                        <div class="play-button">
+                            <svg class="play-icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                        <div class="thumbnail-duration">5:30</div>
+                    </div>
+                    <div class="video-card-content">
+                        <div class="video-card-category">
+                            <span class="badge badge-padrao">Padrão</span>
+                        </div>
+                        <h3 class="video-card-title">Como Registrar Atividades Físicas</h3>
+                        <p class="video-card-description">Tutorial completo sobre como registrar suas atividades físicas no aplicativo Viva+</p>
+                        <div class="video-card-footer">
+                            <div class="video-card-date">
+                                <span>📅</span>
+                                <span>15/01/2024</span>
+                            </div>
+                            <button class="watch-btn">
+                                <span>▶️</span>
+                                <span>Assistir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="video-card" data-category="padrao"
+                     data-title="Pausas Psicofisiológicas - Guia Prático"
+                     data-description="Aprenda a fazer as pausas corretamente e como registrá-las no sistema"
+                     data-embed="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                     data-duration="3:45"
+                     data-date="2024-01-20">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-category">🏃</div>
+                        <div class="play-button">
+                            <svg class="play-icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                        <div class="thumbnail-duration">3:45</div>
+                    </div>
+                    <div class="video-card-content">
+                        <div class="video-card-category">
+                            <span class="badge badge-padrao">Padrão</span>
+                        </div>
+                        <h3 class="video-card-title">Pausas Psicofisiológicas - Guia Prático</h3>
+                        <p class="video-card-description">Aprenda a fazer as pausas corretamente e como registrá-las no sistema</p>
+                        <div class="video-card-footer">
+                            <div class="video-card-date">
+                                <span>📅</span>
+                                <span>20/01/2024</span>
+                            </div>
+                            <button class="watch-btn">
+                                <span>▶️</span>
+                                <span>Assistir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="video-card" data-category="bonificador"
+                     data-title="Atividades em Grupo - Dicas e Ideias"
+                     data-description="Ideias criativas para atividades em grupo que podem ser realizadas presencialmente ou virtualmente"
+                     data-embed="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                     data-duration="7:20"
+                     data-date="2024-01-25">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-category">🏆</div>
+                        <div class="play-button">
+                            <svg class="play-icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                        <div class="thumbnail-duration">7:20</div>
+                    </div>
+                    <div class="video-card-content">
+                        <div class="video-card-category">
+                            <span class="badge badge-bonificador">Bonificador</span>
+                        </div>
+                        <h3 class="video-card-title">Atividades em Grupo - Dicas e Ideias</h3>
+                        <p class="video-card-description">Ideias criativas para atividades em grupo que podem ser realizadas presencialmente ou virtualmente</p>
+                        <div class="video-card-footer">
+                            <div class="video-card-date">
+                                <span>📅</span>
+                                <span>25/01/2024</span>
+                            </div>
+                            <button class="watch-btn">
+                                <span>▶️</span>
+                                <span>Assistir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 4 -->
+                <div class="video-card" data-category="bonificador"
+                     data-title="Hobbies e Bem-estar Mental"
+                     data-description="Como escolher e praticar hobbies que contribuem para seu bem-estar"
+                     data-embed="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                     data-duration="6:15"
+                     data-date="2024-02-01">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-category">🏆</div>
+                        <div class="play-button">
+                            <svg class="play-icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                        <div class="thumbnail-duration">6:15</div>
+                    </div>
+                    <div class="video-card-content">
+                        <div class="video-card-category">
+                            <span class="badge badge-bonificador">Bonificador</span>
+                        </div>
+                        <h3 class="video-card-title">Hobbies e Bem-estar Mental</h3>
+                        <p class="video-card-description">Como escolher e praticar hobbies que contribuem para seu bem-estar</p>
+                        <div class="video-card-footer">
+                            <div class="video-card-date">
+                                <span>📅</span>
+                                <span>01/02/2024</span>
+                            </div>
+                            <button class="watch-btn">
+                                <span>▶️</span>
+                                <span>Assistir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 5 -->
+                <div class="video-card" data-category="penalizador"
+                     data-title="Evitando Penalizações no Desafio"
+                     data-description="Dicas importantes para não perder pontos no programa"
+                     data-embed="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                     data-duration="4:30"
+                     data-date="2024-02-05">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-category">⚠️</div>
+                        <div class="play-button">
+                            <svg class="play-icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                        <div class="thumbnail-duration">4:30</div>
+                    </div>
+                    <div class="video-card-content">
+                        <div class="video-card-category">
+                            <span class="badge badge-penalizador">Penalizador</span>
+                        </div>
+                        <h3 class="video-card-title">Evitando Penalizações no Desafio</h3>
+                        <p class="video-card-description">Dicas importantes para não perder pontos no programa</p>
+                        <div class="video-card-footer">
+                            <div class="video-card-date">
+                                <span>📅</span>
+                                <span>05/02/2024</span>
+                            </div>
+                            <button class="watch-btn">
+                                <span>▶️</span>
+                                <span>Assistir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 6 -->
+                <div class="video-card" data-category="geral"
+                     data-title="Bem-vindos ao Desafio Viva+"
+                     data-description="Vídeo de apresentação do programa e seus objetivos"
+                     data-embed="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                     data-duration="8:45"
+                     data-date="2024-01-10">
+                    <div class="video-thumbnail">
+                        <div class="thumbnail-category">📺</div>
+                        <div class="play-button">
+                            <svg class="play-icon" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                        <div class="thumbnail-duration">8:45</div>
+                    </div>
+                    <div class="video-card-content">
+                        <div class="video-card-category">
+                            <span class="badge badge-geral">Geral</span>
+                        </div>
+                        <h3 class="video-card-title">Bem-vindos ao Desafio Viva+</h3>
+                        <p class="video-card-description">Vídeo de apresentação do programa e seus objetivos</p>
+                        <div class="video-card-footer">
+                            <div class="video-card-date">
+                                <span>📅</span>
+                                <span>10/01/2024</span>
+                            </div>
+                            <button class="watch-btn">
+                                <span>▶️</span>
+                                <span>Assistir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="empty-state">
+                <div class="empty-icon">📹</div>
+                <h3 class="empty-title">Nenhum vídeo encontrado</h3>
+                <p class="empty-description">Não há vídeos disponíveis nesta categoria no momento.</p>
+            </div>
+
+            <!-- Links importantes -->
+            <div class="links-section">
+                <h2>Links Importantes</h2>
+                <p class="subtitle">Acesse as plataformas necessárias para o programa</p>
+                
+                <div class="links-grid">
+                    <div class="link-item">
+                        <h4>📱 Aplicativo Medicina App</h4>
+                        <p>Para registrar pausas do almoço e pausas psicofisiológicas</p>
+                        <a href="https://apps.powerapps.com/play/e/default-7893571b-6c2c-4cef-b4da-7d4b266a0626/a/fb5dcd3a-c6e0-4fe6-81b6-c72ac260261a?tenantId=7893571b-6c2c-4cef-b4da-7d4b266a0626&hint=1e3b12ff-eda4-4f32-8a80-2ec2a44cb62b&sourcetime=portal&hidenavbar=true" 
+                           class="link-btn" target="_blank" rel="noopener noreferrer">
+                            Acessar Aplicativo
+                        </a>
+                    </div>
+                    
+                    <div class="link-item">
+                        <h4>🤖 MinaBot</h4>
+                        <p>Autoavaliação de Saúde Mental</p>
+                        <a href="#" class="link-btn">Acessar MinaBot</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <h3>Desafio Viva+</h3>
+        <p>Promovendo saúde e bem-estar no ambiente de trabalho</p>
+    </div>
+
+    <script>
+        // Video player functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const videoCards = document.querySelectorAll('.video-card');
+            const videoPlayer = document.getElementById('video-player');
+            const videoIframe = document.getElementById('video-iframe');
+            const playerTitle = document.getElementById('player-title');
+            const playerDescription = document.getElementById('player-description');
+            const playerDuration = document.getElementById('player-duration');
+            const playerDate = document.getElementById('player-date');
+            const playerCategoryIcon = document.getElementById('player-category-icon');
+            const playerBadge = document.getElementById('player-badge');
+
+            // Category icons and badge classes
+            const categoryConfig = {
+                'padrao': { icon: '🏃', badgeClass: 'badge-padrao', label: 'Padrão' },
+                'bonificador': { icon: '🏆', badgeClass: 'badge-bonificador', label: 'Bonificador' },
+                'penalizador': { icon: '⚠️', badgeClass: 'badge-penalizador', label: 'Penalizador' },
+                'geral': { icon: '📺', badgeClass: 'badge-geral', label: 'Geral' }
+            };
+
+            // Add click event to video cards and watch buttons
+            videoCards.forEach(card => {
+                const playVideo = () => {
+                    const title = card.dataset.title;
+                    const description = card.dataset.description;
+                    const embedUrl = card.dataset.embed;
+                    const duration = card.dataset.duration;
+                    const date = new Date(card.dataset.date).toLocaleDateString('pt-BR');
+                    const category = card.dataset.category;
+                    const config = categoryConfig[category];
+
+                    // Update player content
+                    playerTitle.textContent = title;
+                    playerDescription.textContent = description;
+                    playerDuration.textContent = duration;
+                    playerDate.textContent = date;
+                    playerCategoryIcon.textContent = config.icon;
+                    
+                    // Update badge
+                    playerBadge.className = `badge ${config.badgeClass}`;
+                    playerBadge.textContent = config.label;
+
+                    // Set video source and show player
+                    videoIframe.src = embedUrl;
+                    videoPlayer.style.display = 'block';
+
+                    // Scroll to player
+                    videoPlayer.scrollIntoView({ behavior: 'smooth' });
+                };
+
+                // Click on card
+                card.addEventListener('click', playVideo);
+
+                // Click on watch button
+                const watchBtn = card.querySelector('.watch-btn');
+                if (watchBtn) {
+                    watchBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        playVideo();
+                    });
+                }
+            });
+
+            // Close video player when clicking outside or pressing escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && videoPlayer.style.display === 'block') {
+                    videoPlayer.style.display = 'none';
+                    videoIframe.src = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

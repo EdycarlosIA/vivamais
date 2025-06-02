@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio Viva+ - Portal de Perguntas Frequentes</title>
+    <meta name="description" content="Portal de Perguntas Frequentes do Desafio Viva+">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 50%, #f0f9ff 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: #b2f5ea;
+            margin-bottom: 1.5rem;
+        }
+
+        .header .description {
+            font-size: 1.1rem;
+            color: #ccfbf1;
+            max-width: 48rem;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        .categories {
+            margin-bottom: 3rem;
+        }
+
+        .categories h2 {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .category-filter {
+            display: none;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: block;
+        }
+
+        .category-btn:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .category-filter:checked + .category-btn {
+            background: #0d9488;
+            color: white;
+            border-color: #0d9488;
+        }
+
+        .category-btn h3 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .badge-padrao {
+            background: #059669;
+            color: white;
+        }
+
+        .badge-bonificador {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .badge-penalizador {
+            background: #ef4444;
+            color: white;
+        }
+
+        .badge-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .faq-section {
+            margin-bottom: 2rem;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Accordion functionality with CSS only */
+        .accordion-checkbox {
+            display: none;
+        }
+
+        .faq-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #f3f4f6;
+            transition: background-color 0.2s;
+        }
+
+        .faq-header:hover {
+            background: #f9fafb;
+        }
+
+        .faq-header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .faq-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .faq-icon.padrao {
+            background: #059669;
+        }
+
+        .faq-icon.bonificador {
+            background: #3b82f6;
+        }
+
+        .faq-icon.penalizador {
+            background: #ef4444;
+        }
+
+        .faq-title {
+            flex: 1;
+        }
+
+        .faq-title h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .chevron {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: #6b7280;
+            transition: transform 0.2s;
+        }
+
+        .accordion-checkbox:checked + .faq-header .chevron {
+            transform: rotate(180deg);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-checkbox:checked ~ .faq-content {
+            max-height: 1000px;
+            transition: max-height 0.3s ease-in;
+        }
+
+        .faq-content-inner {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .question-box {
+            background: #f9fafb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-box h4 {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-box p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .answer-box {
+            background: #f0fdfa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+
+        .answer-box h4 {
+            font-weight: 600;
+            color: #0d9488;
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-box p {
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        /* Category filtering with CSS only - Fixed structure */
+        .faq-item {
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        /* Show all items when "Todos" is selected (default) */
+        #filter-todos:checked ~ .content-wrapper .faq-item {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Show only "padrão" items when "Indicadores Padrão" is selected */
+        #filter-padrao:checked ~ .content-wrapper .faq-item[data-category="padrão"] {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Show only "bonificador" items when "Indicadores Bonificadores" is selected */
+        #filter-bonificador:checked ~ .content-wrapper .faq-item[data-category="bonificador"] {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Show only "penalizador" items when "Indicadores Penalizadores" is selected */
+        #filter-penalizador:checked ~ .content-wrapper .faq-item[data-category="penalizador"] {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .links-section {
+            margin-top: 3rem;
+            background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+            color: white;
+            border-radius: 0.75rem;
+            padding: 2rem;
+        }
+
+        .links-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .links-section .subtitle {
+            color: #b2f5ea;
+            margin-bottom: 1.5rem;
+        }
+
+        .link-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .link-item h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .link-item p {
+            font-size: 0.875rem;
+            color: #b2f5ea;
+            margin-bottom: 0.75rem;
+        }
+
+        .link-btn {
+            background: white;
+            color: #0d9488;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .link-btn:hover {
+            background: #f3f4f6;
+            transform: translateY(-1px);
+        }
+
+        .footer {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer p {
+            color: #9ca3af;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header .subtitle {
+                font-size: 1.25rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .faq-header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Desafio Viva+</h1>
+        <p class="subtitle">Portal de Perguntas Frequentes</p>
+        <p class="description">
+            Iniciativa para promover atividades saudáveis e fomentar o bem-estar entre os membros da equipe.
+        </p>
+    </div>
+
+    <div class="container">
+        <!-- Category Filter Inputs (moved outside for proper CSS selector) -->
+        <input type="radio" name="category" id="filter-todos" class="category-filter" checked>
+        <input type="radio" name="category" id="filter-padrao" class="category-filter">
+        <input type="radio" name="category" id="filter-bonificador" class="category-filter">
+        <input type="radio" name="category" id="filter-penalizador" class="category-filter">
+
+        <!-- Category Filter Labels -->
+        <div class="categories">
+            <h2>Categorias de Indicadores</h2>
+            <div class="categories-grid">
+                <label for="filter-todos" class="category-btn">
+                    <h3>Todos</h3>
+                    <span class="badge badge-secondary">10</span>
+                </label>
+                
+                <label for="filter-padrao" class="category-btn">
+                    <h3>Indicadores Padrão</h3>
+                    <span class="badge badge-padrao">4</span>
+                </label>
+                
+                <label for="filter-bonificador" class="category-btn">
+                    <h3>Indicadores Bonificadores</h3>
+                    <span class="badge badge-bonificador">4</span>
+                </label>
+                
+                <label for="filter-penalizador" class="category-btn">
+                    <h3>Indicadores Penalizadores</h3>
+                    <span class="badge badge-penalizador">2</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Content wrapper for filtering -->
+        <div class="content-wrapper">
+            <!-- FAQ Items -->
+            <div class="faq-section">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item" data-category="padrão">
+                    <input type="checkbox" id="faq1" class="accordion-checkbox">
+                    <label for="faq1" class="faq-header">
+                        <div class="faq-header-content">
+                            <div class="faq-icon padrao">🏃</div>
+                            <div class="faq-title">
+                                <h3>Atividades Físicas 3x por semana</h3>
+                                <span class="badge badge-padrao">Padrão</span>
+                            </div>
+                        </div>
+                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </label>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="question-box">
+                                <h4>Pergunta:</h4>
+                                <p>Indicador Padrão - Toda a equipe de forma individual, devem realizar atividades físicas 3x por semana – Como evidenciar e onde?</p>
+                            </div>
+                            <div class="answer-box">
+                                <h4>Resposta:</h4>
+                                <p>A equipe deverá subir as evidências por meio aplicativo Viva+, mas é obrigatório que haja evidência de todos. As evidências podem ser fotos ou capturas de tela de aplicativos que indiquem o dia e o horário da atividade realizada. É permitido acumular as evidências e postá-las até a data definida para o fechamento da semana: a próxima terça-feira da semana seguinte.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item" data-category="padrão">
+                    <input type="checkbox" id="faq2" class="accordion-checkbox">
+                    <label for="faq2" class="faq-header">
+                        <div class="faq-header-content">
+                            <div class="faq-icon padrao">❤️</div>
+                            <div class="faq-title">
+                                <h3>Check-up Saúde Emocional</h3>
+                                <span class="badge badge-padrao">Padrão</span>
+                            </div>
+                        </div>
+                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </label>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="question-box">
+                                <h4>Pergunta:</h4>
+                                <p>Indicador Padrão - Realizar check-up de saúde emocional na MinaBot 1x a cada 15 dias – Onde deverá ser feita essa avaliação?</p>
+                            </div>
+                            <div class="answer-box">
+                                <h4>Resposta:</h4>
+                                <p>Essa avaliação deverá ser feita por meio da Minabot, na opção Saúde, Segurança e Meio Ambiente, no campo Autoavaliação – Saúde Mental. O empregado deverá fazer um print (que evidencie o dia e a hora) ao final da avaliação, para utilizá-lo como evidência. Reforçando que essa é uma meta do Corredor Norte, com o objetivo de alavancarmos o número de avaliações ao longo do ano de 2025.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item" data-category="padrão">
+                    <input type="checkbox" id="faq3" class="accordion-checkbox">
+                    <label for="faq3" class="faq-header">
+                        <div class="faq-header-content">
+                            <div class="faq-icon padrao">☕</div>
+                            <div class="faq-title">
+                                <h3>Pausa para o Almoço</h3>
+                                <span class="badge badge-padrao">Padrão</span>
+                            </div>
+                        </div>
+                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </label>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="question-box">
+                                <h4>Pergunta:</h4>
+                                <p>Indicador Padrão - Realizar pausa do Almoço 3x por semana no APP de Ergonomia – Como evidenciar essa pausa?</p>
+                            </div>
+                            <div class="answer-box">
+                                <h4>Resposta:</h4>
+                                <p>Essa pausa deve ser evidenciada por meio do aplicativo Medicina App – Ergonomia Online. Incluímos as pausas para o almoço, pois sabemos da dificuldade de cumprir esse horário em meio às demandas do nosso dia a dia. Forma de evidência: imagens ou capturas de tela com o dia da realização da pausa, sendo necessário que as três pausas estejam registradas na mesma semana.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item" data-category="padrão">
+                    <input type="checkbox" id="faq4" class="accordion-checkbox">
+                    <label for="faq4" class="faq-header">
+                        <div class="faq-header-content">
+                            <div class="faq-icon padrao">🍽️</div>
+                            <div class="faq-title">
+                                <h3>Refeições Saudáveis</h3>
+                                <span class="badge badge-padrao">Padrão</span>
+                            </div>
+                        </div>
+                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </label>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="question-box">
+                                <h4>Pergunta:</h4>
+                                <p>Indicador Padrão - Postar três refeições saudáveis por semana (individual) – O que considerar como refeição saudável? Todos da equipe devem postar?</p>
+                            </div>
+                            <div class="answer-box">
+                                <h4>Resposta:</h4>
+                                <p>Uma alimentação saudável significa priorizar alimentos naturais, minimamente processados, e reduzir a ingestão de alimentos ultraprocessados, açúcares e gorduras. A orientação é que, antes de iniciar o desafio, os participantes consultem um profissional de nutrição para verificar um cardápio mais adequado ao seu biotipo. No entanto, para esse indicador, será considerada a variedade de cores no prato (podendo ser em qualquer refeição: café da manhã, almoço ou jantar). Sim, 3 vezes por semana, todos os integrantes da equipe deverão realizar as postagens de suas refeições. Formas de evidenciar: imagens ou capturas de tela.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item" data-category="bonificador">
+                    <input type="checkbox" id="faq5" class="accordion-checkbox">
+                    <label for="faq5" class="faq-header">
+                        <div class="faq-header-content">
+                            <div class="faq-icon bonificador">⏰</div>
+                            <div class="faq-title">
+                                <h3>30 minutos de Caminhada</h3>
+                                <span class="badge badge-bonificador">Bonificador</span>
+                            </div>
+                        </div>
+                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </label>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="question-box">
+                                <h4>Pergunta:</h4>
+                                <p>Indicador bonificador - 30 minutos de caminhada 3x na Semana (Individual) – Devemos realizar além da do indicador padrão nº 1?</p>
+                            </div>
+                            <div class="answer-box">
+                                <h4>Resposta:</h4>
+                                <p>Além das atividades físicas realizadas três vezes por semana, todos devem cumprir 30 minutos de caminhada. Podem ser utilizados como forma de registro: relógios smartwatch, aplicativos de celular (os modelos Samsung e iPhone já possuem essa função) ou aplicativos esportivos em suas versões gratuitas (como o Strava, por exemplo). Forma de evidenciar: imagens ou capturas de tela que mostrem a data e o horário da atividade. Nota: Para aqueles que por algum motivo tenham dificuldade de mobilidade e não possam realizar essa tarefa, devem realizar uma atividade física a mais no indicador 1.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="faq-item" data-category="bonificador">
+                    <input type="checkbox" id="faq6" class="accordion-checkbox">
+                    <label for="faq6" class="faq-header">
+                        <div class="faq-header-content">
+                            <div class="faq-icon bonificador">🏆</div>
+                            <div class="faq-title">
+                                <h3>Praticar um Hobby</h3>
+                                <span class="badge badge-bonificador">Bonificador</span>
+                            </div>
+                        </div>
+                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </label>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="question-box">
+                                <h4>Pergunta:</h4>
+                                <p>Indicador Bonificador - Praticar um Hobby 3x ao mês (Individual) – O que posso considerar como Hobby?</p>
+                            </div>
+                            <div class="answer-box">
+                                <h4>Resposta:</h4>
+                                <p>Será considerada atividade válida aquela exercida exclusivamente como forma de lazer, distração e passatempo, preferencialmente fora da rotina habitual. Exemplos: hobbies criativos (como pintar ou escrever), hobbies intelectuais (como leitura ou aprendizado de idiomas), hobbies com atividade física (como esportes ou caminhadas) e hobbies sociais (como jogos de tabuleiro ou participação em grupos de interesse). Forma de evidenciar: imagens ou capturas de tela.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 7 -->
+                <div class="faq-item" data-category="bonificador">
+                    <input type="checkbox" id="faq7" class="accordion-checkbox">
+                    <label for="faq7" class="faq-header">
+                        <div class="faq-header-content">
+                            <div class="faq-icon bonificador">👥</div>
+                            <div class="faq-title">
+                                <h3>Atividade em Grupo</h3>
+                                <span class="badge badge-bonificador">Bonificador</span>
+                            </div>
+                        </div>
+                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </label>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="question-box">
+                                <h4>Pergunta:</h4>
+                                <p>Indicador Bonificador - Realizar atividade em grupo 1x no mês – Como devo proceder para empregados que estão em localidade diferente?</p>
+                            </div>
+                            <div class="answer-box">
+                                <h4>Resposta:</h4>
+                                <p>Para os empregados que fazem parte da mesma equipe, mas estão em localidades diferentes, será considerada como evidência a presença de parte da equipe reunida presencialmente, enquanto os demais integrantes, de outras localidades, realizam a atividade no mesmo horário. A evidência deverá ser um print de uma chamada de vídeo que comprove a participação de todos os integrantes da equipe.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 8 -->
+                <div class="faq-item" data-category="bonificador">
+                    <input type="checkbox" id="faq8" class="accordion-checkbox">
+                    <label for="faq8" class="faq-header">
+                        <div class="faq-header-content">
+                            <div class="faq-icon bonificador">📅</div>
+                            <div class="faq-title">
+                                <h3>Atividade Quinzenal Surpresa</h3>
+                                <span class="badge badge-bonificador">Bonificador</span>
+                            </div>
+                        </div>
+                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </label>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="question-box">
+                                <h4>Pergunta:</h4>
+                                <p>Indicador Bonificador - Atividade quinzenal surpresa (Físico e Mentais) – Como vai funcionar?</p>
+                            </div>
+                            <div class="answer-box">
+                                <h4>Resposta:</h4>
+                                <p>Serão divulgados via card e no aplicativo. Os integrantes da equipe devem cumprir a atividade surpresa, lembrando que serão atividades com foco físico e mental. Forma de evidenciar: imagens, prints.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 9 -->
+                <div class="faq-item" data-category="penalizador">
+                    <input type="checkbox" id="faq9" class="accordion-checkbox">
+                    <label for="faq9" class="faq-header">
+                        <div class="faq-header-content">
+                            <div class="faq-icon penalizador">⚠️</div>
+                            <div class="faq-title">
+                                <h3>Pausas Psicofisiológicas</h3>
+                                <span class="badge badge-penalizador">Penalizador</span>
+                            </div>
+                        </div>
+                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </label>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="question-box">
+                                <h4>Pergunta:</h4>
+                                <p>Indicador Penalizador - Não realizar as pausas psicofisiológicas – Como vai funcionar?</p>
+                            </div>
+                            <div class="answer-box">
+                                <h4>Resposta:</h4>
+                                <p>As pausas psicofisiológicas não estão como indicador padrão, mas devem ser realizadas, pois a ausência delas será penalizada.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 10 -->
+                <div class="faq-item" data-category="penalizador">
+                    <input type="checkbox" id="faq10" class="accordion-checkbox">
+                    <label for="faq10" class="faq-header">
+                        <div class="faq-header-content">
+                            <div class="faq-icon penalizador">📷</div>
+                            <div class="faq-title">
+                                <h3>Check-up Emocional</h3>
+                                <span class="badge badge-penalizador">Penalizador</span>
+                            </div>
+                        </div>
+                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </label>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="question-box">
+                                <h4>Pergunta:</h4>
+                                <p>Indicador Penalizador - Não realizar a autoavaliação de check up emocional na MinaBot 1x – Como vai funcionar?</p>
+                            </div>
+                            <div class="answer-box">
+                                <h4>Resposta:</h4>
+                                <p>A não realização de uma avaliação no mês irá impactar no seu resultado final. Essa avaliação deverá ser feita através da Minabot, na opção Saúde, Segurança e Meio Ambiente, no campo da Autoavaliação de Saúde Mental. O empregado deverá fazer o print no final da avaliação para usar como evidência.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Links importantes -->
+            <div class="links-section">
+                <h2>Links Importantes</h2>
+                <p class="subtitle">Acesse as plataformas necessárias para o programa</p>
+                
+                <div class="link-item">
+                    <h4>Aplicativo Medicina App - Ergonomia Online</h4>
+                    <p>Para registrar pausas do almoço e pausas psicofisiológicas</p>
+                    <a href="https://apps.powerapps.com/play/e/default-7893571b-6c2c-4cef-b4da-7d4b266a0626/a/fb5dcd3a-c6e0-4fe6-81b6-c72ac260261a?tenantId=7893571b-6c2c-4cef-b4da-7d4b266a0626&hint=1e3b12ff-eda4-4f32-8a80-2ec2a44cb62b&sourcetime=portal&hidenavbar=true" 
+
+
+
+
+                       class="link-btn" target="_blank" rel="noopener noreferrer">
+                        Acessar Aplicativo
+                    </a>
+                </div>
+                
+                <div class="link-item">
+                    <h4>MinaBot - Autoavaliação de Saúde Mental</h4>
+                    <p>Acesse através da opção Saúde, Segurança e Meio Ambiente</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <h3>Desafio Viva+</h3>
+        <p>Promovendo saúde e bem-estar no ambiente de trabalho</p>
+    </div>
+</body>
+</html>

@@ -52,72 +52,6 @@
             padding: 3rem 1rem;
         }
 
-        .important-notice {
-            background: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            margin-bottom: 3rem;
-            border-left: 4px solid #f59e0b;
-        }
-
-        .important-notice h2 {
-            color: #f59e0b;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .important-notice h3 {
-            color: #374151;
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin: 1.5rem 0 0.75rem 0;
-        }
-
-        .important-notice h4 {
-            color: #059669;
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 1rem 0 0.5rem 0;
-        }
-
-        .important-notice .vacation-section {
-            color: #3b82f6;
-        }
-
-        .important-notice .medical-section {
-            color: #ef4444;
-        }
-
-        .important-notice p {
-            color: #6b7280;
-            margin-bottom: 1rem;
-        }
-
-        .important-notice ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .important-notice li {
-            color: #374151;
-            margin-bottom: 0.5rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .important-notice li:before {
-            content: "•";
-            color: #059669;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-
         .categories {
             margin-bottom: 3rem;
         }
@@ -155,12 +89,18 @@
         .category-btn:hover {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transform: translateY(-1px);
+            border-color: #0d9488;
         }
 
         .category-filter:checked + .category-btn {
             background: #0d9488;
             color: white;
             border-color: #0d9488;
+        }
+
+        .category-filter:checked + .category-btn .badge {
+            background: white;
+            color: #0d9488;
         }
 
         .category-btn h3 {
@@ -207,139 +147,16 @@
             margin-bottom: 1rem;
             overflow: hidden;
             transition: all 0.3s;
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
         }
 
         .faq-item:hover {
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .accordion-checkbox {
-            display: none;
-        }
-
-        .faq-header {
-            padding: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #f3f4f6;
-            transition: background-color 0.2s;
-        }
-
-        .faq-header:hover {
-            background: #f9fafb;
-        }
-
-        .faq-header-content {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex: 1;
-        }
-
-        .faq-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.25rem;
-        }
-
-        .faq-icon.padrao {
-            background: #059669;
-        }
-
-        .faq-icon.bonificador {
-            background: #3b82f6;
-        }
-
-        .faq-icon.penalizador {
-            background: #ef4444;
-        }
-
-        .faq-title {
-            flex: 1;
-        }
-
-        .faq-title h3 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        .chevron {
-            width: 1.25rem;
-            height: 1.25rem;
-            color: #6b7280;
-            transition: transform 0.2s;
-        }
-
-        .accordion-checkbox:checked + .faq-header .chevron {
-            transform: rotate(180deg);
-        }
-
-        .faq-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-
-        .accordion-checkbox:checked ~ .faq-content {
-            max-height: 1000px;
-            transition: max-height 0.3s ease-in;
-        }
-
-        .faq-content-inner {
-            padding: 0 1.5rem 1.5rem;
-        }
-
-        .question-box {
-            background: #f9fafb;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .question-box h4 {
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 0.5rem;
-        }
-
-        .question-box p {
-            color: #6b7280;
-            line-height: 1.6;
-        }
-
-        .answer-box {
-            background: #f0fdfa;
-            border-radius: 0.5rem;
-            padding: 1rem;
-        }
-
-        .answer-box h4 {
-            font-weight: 600;
-            color: #0d9488;
-            margin-bottom: 0.5rem;
-        }
-
-        .answer-box p {
-            color: #374151;
-            line-height: 1.6;
-        }
-
-        .faq-item {
-            display: none;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-        }
-
+        /* Category filtering */
         #filter-todos:checked ~ .content-wrapper .faq-item {
             display: block;
             opacity: 1;
@@ -362,6 +179,171 @@
             display: block;
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Accordion functionality */
+        .accordion-checkbox {
+            display: none;
+        }
+
+        .faq-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.2s;
+        }
+
+        .faq-header:hover {
+            background: #f9fafb;
+        }
+
+        .faq-header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .faq-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .faq-icon.padrao {
+            background: #059669;
+        }
+
+        .faq-icon.bonificador {
+            background: #3b82f6;
+        }
+
+        .faq-icon.penalizador {
+            background: #ef4444;
+        }
+
+        .faq-title {
+            flex: 1;
+        }
+
+        .faq-title h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .chevron {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: #6b7280;
+            transition: transform 0.2s;
+        }
+
+        .accordion-checkbox:checked + .faq-header .chevron {
+            transform: rotate(180deg);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-checkbox:checked ~ .faq-content {
+            max-height: 2000px;
+            transition: max-height 0.3s ease-in;
+        }
+
+        .faq-content-inner {
+            padding: 0 1.5rem 1.5rem;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .question-box {
+            background: #f9fafb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .question-box h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-box p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .answer-box {
+            background: #f0fdfa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .answer-box h4 {
+            font-weight: 600;
+            color: #0d9488;
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-box p {
+            color: #374151;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        .image-placeholder {
+            background: #f3f4f6;
+            border: 2px dashed #d1d5db;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .image-placeholder svg {
+            width: 2rem;
+            height: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .image-placeholder p {
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .image-placeholder .subtitle {
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        .link-btn {
+            background: white;
+            color: #0d9488;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            transition: all 0.2s;
+            margin-top: 0.75rem;
+        }
+
+        .link-btn:hover {
+            background: #f3f4f6;
+            transform: translateY(-1px);
         }
 
         .links-section {
@@ -400,22 +382,6 @@
             margin-bottom: 0.75rem;
         }
 
-        .link-btn {
-            background: white;
-            color: #0d9488;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-block;
-            transition: all 0.2s;
-        }
-
-        .link-btn:hover {
-            background: #f3f4f6;
-            transform: translateY(-1px);
-        }
-
         .footer {
             background: #1f2937;
             color: white;
@@ -432,6 +398,73 @@
 
         .footer p {
             color: #9ca3af;
+        }
+
+        .important-notice {
+            background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 10%, #fef3c7 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .important-notice h2 {
+            color: #92400e;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .important-notice p {
+            color: #92400e;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .vacation-section {
+            color: #2563eb;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .medical-section {
+            color: #dc2626;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .important-notice h4 {
+            color: #059669;
+            font-weight: 600;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .important-notice ul {
+            margin: 0.5rem 0 1rem 1.5rem;
+            color: #374151;
+        }
+
+        .important-notice li {
+            margin-bottom: 0.25rem;
+            line-height: 1.5;
+        }
+
+        .important-notice strong {
+            color: #dc2626;
+            font-weight: 700;
         }
 
         @media (max-width: 768px) {
@@ -453,13 +486,16 @@
                 gap: 0.5rem;
             }
 
-            .important-notice {
-                padding: 1.5rem;
+            .faq-icon {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1.25rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <div class="header">
         <h1>Desafio Viva+</h1>
         <p class="subtitle">Portal de Perguntas Frequentes</p>
@@ -468,45 +504,48 @@
         </p>
     </div>
 
+    <!-- Important Notice Section -->
+    <div class="important-notice">
+        <h2>⚠️ Observações Importantes</h2>
+        <p>Em caso de férias e atestados, sinalizar a equipe de administradores do programa. Segue os indicadores liberados e obrigatórios no período de férias:</p>
+        
+        <h3 class="vacation-section">🏖️ Férias:</h3>
+        
+        <h4>Indicadores liberados de evidenciar:</h4>
+        <ul>
+            <li>Check-up de saúde (Minabot)</li>
+            <li>Pausa do Almoço (App ergonomia)</li>
+            <li>Pausa Psicofisiológica (App ergonomia)</li>
+            <li>Atividade em Grupo</li>
+            <li>Atividade quinzenal surpresa</li>
+        </ul>
+        
+        <h4>Indicadores obrigatórios mesmo nas férias:</h4>
+        <ul>
+            <li>Realizar atividade física 3x na semana</li>
+            <li>Postar 3x saudáveis</li>
+            <li>30 minutos de caminhada por semana</li>
+            <li>Praticar um hobby</li>
+        </ul>
+        
+        <h3 class="medical-section">🏥 Atestados:</h3>
+        <p><strong>Todos os indicadores liberados.</strong></p>
+    </div>
+
     <div class="container">
+        <!-- Category Filter Inputs -->
         <input type="radio" name="category" id="filter-todos" class="category-filter" checked>
         <input type="radio" name="category" id="filter-padrao" class="category-filter">
         <input type="radio" name="category" id="filter-bonificador" class="category-filter">
         <input type="radio" name="category" id="filter-penalizador" class="category-filter">
 
-        <div class="important-notice">
-            <h2>⚠️ Observações Importantes</h2>
-            <p>Em caso de férias e atestados, sinalizar a equipe de administradores do programa. Segue os indicadores liberados e obrigatórios no período de férias:</p>
-            
-            <h3 class="vacation-section">🏖️ Férias:</h3>
-            
-            <h4>Indicadores liberados de evidenciar:</h4>
-            <ul>
-                <li>Check-up de saúde (Minabot)</li>
-                <li>Pausa do Almoço (App ergonomia)</li>
-                <li>Pausa Psicofisiológica (App ergonomia)</li>
-                <li>Atividade em Grupo</li>
-                <li>Atividade quinzenal surpresa</li>
-            </ul>
-            
-            <h4>Indicadores obrigatórios mesmo nas férias:</h4>
-            <ul>
-                <li>Realizar atividade física 3x na semana</li>
-                <li>Postar 3x saudáveis</li>
-                <li>30 minutos de caminhada por semana</li>
-                <li>Praticar um hobby</li>
-            </ul>
-            
-            <h3 class="medical-section">🏥 Atestados:</h3>
-            <p><strong>Todos os indicadores liberados.</strong></p>
-        </div>
-
+        <!-- Category Filter Labels -->
         <div class="categories">
             <h2>Categorias de Indicadores</h2>
             <div class="categories-grid">
                 <label for="filter-todos" class="category-btn">
                     <h3>Todos</h3>
-                    <span class="badge badge-secondary">10</span>
+                    <span class="badge badge-secondary">12</span>
                 </label>
                 
                 <label for="filter-padrao" class="category-btn">
@@ -516,7 +555,7 @@
                 
                 <label for="filter-bonificador" class="category-btn">
                     <h3>Indicadores Bonificadores</h3>
-                    <span class="badge badge-bonificador">4</span>
+                    <span class="badge badge-bonificador">6</span>
                 </label>
                 
                 <label for="filter-penalizador" class="category-btn">
@@ -526,8 +565,12 @@
             </div>
         </div>
 
+        <!-- Content wrapper for filtering -->
         <div class="content-wrapper">
+            <!-- FAQ Items -->
             <div class="faq-section">
+                
+                <!-- FAQ Item 1 -->
                 <div class="faq-item" data-category="padrão">
                     <input type="checkbox" id="faq1" class="accordion-checkbox">
                     <label for="faq1" class="faq-header">
@@ -550,12 +593,22 @@
                             </div>
                             <div class="answer-box">
                                 <h4>Resposta:</h4>
-                                <p>A equipe deverá subir as evidências por meio aplicativo Viva+, mas é obrigatório que haja evidência de todos. As evidências podem ser fotos ou capturas de tela de aplicativos que indiquem o dia e o horário da atividade realizada. É permitido acumular as evidências e postá-las até a data definida para o fechamento da semana: a próxima terça-feira da semana seguinte.</p>
+                                <p>A equipe deverá subir as evidências por meio aplicativo Viva+, mas é obrigatório que haja evidência de todos. As evidências podem ser fotos ou capturas de tela de aplicativos que indiquem o dia e o horário da atividade realizada. É permitido acumular as evidências e postá-las até a data definida para o fechamento da semana.
+
+(Entendimento de semana: Inicia toda segunda-feira e encerra aos domingos)</p>
+                            </div>
+                            <div class="image-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>Imagem de exemplo</p>
+                                <p class="subtitle">Adicione aqui uma imagem demonstrando como fazer esta atividade</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- FAQ Item 2 -->
                 <div class="faq-item" data-category="padrão">
                     <input type="checkbox" id="faq2" class="accordion-checkbox">
                     <label for="faq2" class="faq-header">
@@ -580,17 +633,25 @@
                                 <h4>Resposta:</h4>
                                 <p>Essa avaliação deverá ser feita por meio da Minabot, na opção Saúde, Segurança e Meio Ambiente, no campo Autoavaliação – Saúde Mental. O empregado deverá fazer um print (que evidencie o dia e a hora) ao final da avaliação, para utilizá-lo como evidência. Reforçando que essa é uma meta do Corredor Norte, com o objetivo de alavancarmos o número de avaliações ao longo do ano de 2025.</p>
                             </div>
+                            <div class="image-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>Imagem de exemplo</p>
+                                <p class="subtitle">Adicione aqui uma imagem demonstrando como fazer esta atividade</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- FAQ Item 3 -->
                 <div class="faq-item" data-category="padrão">
                     <input type="checkbox" id="faq3" class="accordion-checkbox">
                     <label for="faq3" class="faq-header">
                         <div class="faq-header-content">
                             <div class="faq-icon padrao">☕</div>
                             <div class="faq-title">
-                                <h3>Pausa para o Almoço</h3>
+                                <h3>Intervalo do Almoço/Jantar</h3>
                                 <span class="badge badge-padrao">Padrão</span>
                             </div>
                         </div>
@@ -602,16 +663,24 @@
                         <div class="faq-content-inner">
                             <div class="question-box">
                                 <h4>Pergunta:</h4>
-                                <p>Indicador Padrão - Realizar pausa do Almoço 3x por semana no APP de Ergonomia – Como evidenciar essa pausa?</p>
+                                <p>Indicador Padrão - Realizar intervalo do Almoço/Jantar 3x por semana no APP de Ergonomia – Como evidenciar esse intervalo?</p>
                             </div>
                             <div class="answer-box">
                                 <h4>Resposta:</h4>
-                                <p>Essa pausa deve ser evidenciada por meio do aplicativo Medicina App – Ergonomia Online. Incluímos as pausas para o almoço, pois sabemos da dificuldade de cumprir esse horário em meio às demandas do nosso dia a dia. Forma de evidência: imagens ou capturas de tela com o dia da realização da pausa, sendo necessário que as três pausas estejam registradas na mesma semana.</p>
+                                <p>Esse intervalo deve ser evidenciado por meio do aplicativo Medicina App Ergonomia Online. Incluímos os intervalos para o almoço/jantar, pois sabemos da dificuldade de cumprir esse horário em meio às demandas do nosso dia a dia. Forma de evidência: imagens ou capturas de tela com o dia da realização da pausa, sendo necessário que as três pausas estejam registradas na mesma semana.</p>
+                            </div>
+                            <div class="image-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>Imagem de exemplo</p>
+                                <p class="subtitle">Adicione aqui uma imagem demonstrando como fazer esta atividade</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- FAQ Item 4 -->
                 <div class="faq-item" data-category="padrão">
                     <input type="checkbox" id="faq4" class="accordion-checkbox">
                     <label for="faq4" class="faq-header">
@@ -636,10 +705,18 @@
                                 <h4>Resposta:</h4>
                                 <p>Uma alimentação saudável significa priorizar alimentos naturais, minimamente processados, e reduzir a ingestão de alimentos ultraprocessados, açúcares e gorduras. A orientação é que, antes de iniciar o desafio, os participantes consultem um profissional de nutrição para verificar um cardápio mais adequado ao seu biotipo. No entanto, para esse indicador, será considerada a variedade de cores no prato (podendo ser em qualquer refeição: café da manhã, almoço ou jantar). Sim, 3 vezes por semana, todos os integrantes da equipe deverão realizar as postagens de suas refeições. Formas de evidenciar: imagens ou capturas de tela.</p>
                             </div>
+                            <div class="image-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>Imagem de exemplo</p>
+                                <p class="subtitle">Adicione aqui uma imagem demonstrando como fazer esta atividade</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- FAQ Item 5 -->
                 <div class="faq-item" data-category="bonificador">
                     <input type="checkbox" id="faq5" class="accordion-checkbox">
                     <label for="faq5" class="faq-header">
@@ -658,16 +735,40 @@
                         <div class="faq-content-inner">
                             <div class="question-box">
                                 <h4>Pergunta:</h4>
-                                <p>Indicador bonificador - 30 minutos de caminhada 3x na Semana (Individual) – Devemos realizar além da do indicador padrão nº 1?</p>
+                                <p>Indicador 30 minutos de caminhada (ou 3.000 mil passos), 1x na Semana (Individual) – Devemos realizar além da do indicador padrão nº 1?</p>
                             </div>
                             <div class="answer-box">
                                 <h4>Resposta:</h4>
-                                <p>Além das atividades físicas realizadas três vezes por semana, todos devem cumprir 30 minutos de caminhada. Podem ser utilizados como forma de registro: relógios smartwatch, aplicativos de celular (os modelos Samsung e iPhone já possuem essa função) ou aplicativos esportivos em suas versões gratuitas (como o Strava, por exemplo). Forma de evidenciar: imagens ou capturas de tela que mostrem a data e o horário da atividade. Nota: Para aqueles que por algum motivo tenham dificuldade de mobilidade e não possam realizar essa tarefa, devem realizar uma atividade física a mais no indicador 1.</p>
+                                <p>Além das atividades físicas realizadas três vezes por semana, todos devem cumprir 30 minutos de caminhada ( ou 3.000 mil passos). Podem ser utilizados como forma de registro: relógios smartwatch, aplicativos de celular (os modelos Samsung e iPhone já possuem essa função) ou aplicativos esportivos em suas versões gratuitas (como o Strava, por exemplo). Forma de evidenciar: imagens ou capturas de tela que mostrem a data e o horário da atividade. Nota: Para aqueles que por algum motivo tenham dificuldade de mobilidade e não possam realizar essa tarefa, devem realizar uma atividade física a mais no indicador 1.</p>
+                            </div>
+                            <div class="image-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>Imagem de exemplo</p>
+                                <p class="subtitle">Adicione aqui uma imagem demonstrando como fazer esta atividade</p>
+                            </div>
+                            
+                            <div class="question-box">
+                                <h4>Pergunta:</h4>
+                                <p>Posso correr em vez de caminhar?</p>
+                            </div>
+                            <div class="answer-box">
+                                <h4>Resposta:</h4>
+                                <p>SIM, contando que não seja a mesma evidencia do indicador 1 (3x de atividade física na semana). A mesma evidência não serve para dois indicadores.</p>
+                            </div>
+                            <div class="image-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>Imagem de exemplo</p>
+                                <p class="subtitle">Adicione aqui uma imagem demonstrando como fazer esta atividade</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- FAQ Item 6 -->
                 <div class="faq-item" data-category="bonificador">
                     <input type="checkbox" id="faq6" class="accordion-checkbox">
                     <label for="faq6" class="faq-header">
@@ -692,10 +793,18 @@
                                 <h4>Resposta:</h4>
                                 <p>Será considerada atividade válida aquela exercida exclusivamente como forma de lazer, distração e passatempo, preferencialmente fora da rotina habitual. Exemplos: hobbies criativos (como pintar ou escrever), hobbies intelectuais (como leitura ou aprendizado de idiomas), hobbies com atividade física (como esportes ou caminhadas) e hobbies sociais (como jogos de tabuleiro ou participação em grupos de interesse). Forma de evidenciar: imagens ou capturas de tela.</p>
                             </div>
+                            <div class="image-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>Imagem de exemplo</p>
+                                <p class="subtitle">Adicione aqui uma imagem demonstrando como fazer esta atividade</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- FAQ Item 7 -->
                 <div class="faq-item" data-category="bonificador">
                     <input type="checkbox" id="faq7" class="accordion-checkbox">
                     <label for="faq7" class="faq-header">
@@ -720,10 +829,18 @@
                                 <h4>Resposta:</h4>
                                 <p>Para os empregados que fazem parte da mesma equipe, mas estão em localidades diferentes, será considerada como evidência a presença de parte da equipe reunida presencialmente, enquanto os demais integrantes, de outras localidades, realizam a atividade no mesmo horário. A evidência deverá ser um print de uma chamada de vídeo que comprove a participação de todos os integrantes da equipe.</p>
                             </div>
+                            <div class="image-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>Imagem de exemplo</p>
+                                <p class="subtitle">Adicione aqui uma imagem demonstrando como fazer esta atividade</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- FAQ Item 8 -->
                 <div class="faq-item" data-category="bonificador">
                     <input type="checkbox" id="faq8" class="accordion-checkbox">
                     <label for="faq8" class="faq-header">
@@ -748,18 +865,26 @@
                                 <h4>Resposta:</h4>
                                 <p>Serão divulgados via card e no aplicativo. Os integrantes da equipe devem cumprir a atividade surpresa, lembrando que serão atividades com foco físico e mental. Forma de evidenciar: imagens, prints.</p>
                             </div>
+                            <div class="image-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>Imagem de exemplo</p>
+                                <p class="subtitle">Adicione aqui uma imagem demonstrando como fazer esta atividade</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="faq-item" data-category="penalizador">
+                <!-- FAQ Item 9 -->
+                <div class="faq-item" data-category="bonificador">
                     <input type="checkbox" id="faq9" class="accordion-checkbox">
                     <label for="faq9" class="faq-header">
                         <div class="faq-header-content">
-                            <div class="faq-icon penalizador">⚠️</div>
+                            <div class="faq-icon bonificador">⚠️</div>
                             <div class="faq-title">
                                 <h3>Pausas Psicofisiológicas</h3>
-                                <span class="badge badge-penalizador">Penalizador</span>
+                                <span class="badge badge-bonificador">Bonificador</span>
                             </div>
                         </div>
                         <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -770,23 +895,34 @@
                         <div class="faq-content-inner">
                             <div class="question-box">
                                 <h4>Pergunta:</h4>
-                                <p>Indicador Penalizador - Não realizar as pausas psicofisiológicas – Como vai funcionar?</p>
+                                <p>Realizar as pausas psicofisiológicas (3x na semana) – Como vai funcionar?</p>
                             </div>
                             <div class="answer-box">
                                 <h4>Resposta:</h4>
-                                <p>As pausas psicofisiológicas não estão como indicador padrão, mas devem ser realizadas, pois a ausência delas será penalizada.</p>
+                                <p>Registrar e tirar suas pausas psicofisiológicas no mínimo 3x na semana, registradas no APP de Ergonomia.</p>
+                                <a href="https://apps.powerapps.com/play/e/default-7893571b-6c2c-4cef-b4da-7d4b266a0626/a/fb5dcd3a-c6e0-4fe6-81b6-c72ac260261a?tenantId=7893571b-6c2c-4cef-b4da-7d4b266a0626&hint=1e3b12ff-eda4-4f32-8a80-2ec2a44cb62b&sourcetime=portal&hidenavbar=true" class="link-btn" target="_blank" rel="noopener noreferrer">
+                                    Acessar Aplicativo
+                                </a>
+                            </div>
+                            <div class="image-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>Imagem de exemplo</p>
+                                <p class="subtitle">Adicione aqui uma imagem demonstrando como fazer esta atividade</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- FAQ Item 10 -->
                 <div class="faq-item" data-category="penalizador">
                     <input type="checkbox" id="faq10" class="accordion-checkbox">
                     <label for="faq10" class="faq-header">
                         <div class="faq-header-content">
-                            <div class="faq-icon penalizador">📷</div>
+                            <div class="faq-icon penalizador">⚠️</div>
                             <div class="faq-title">
-                                <h3>Check-up Emocional</h3>
+                                <h3>Faltas Não Justificadas</h3>
                                 <span class="badge badge-penalizador">Penalizador</span>
                             </div>
                         </div>
@@ -798,17 +934,62 @@
                         <div class="faq-content-inner">
                             <div class="question-box">
                                 <h4>Pergunta:</h4>
-                                <p>Indicador Penalizador - Não realizar a autoavaliação de check up emocional na MinaBot 1x – Como vai funcionar?</p>
+                                <p>Como são contabilizadas as faltas não justificadas?</p>
                             </div>
                             <div class="answer-box">
                                 <h4>Resposta:</h4>
-                                <p>A não realização de uma avaliação no mês irá impactar no seu resultado final. Essa avaliação deverá ser feita através da Minabot, na opção Saúde, Segurança e Meio Ambiente, no campo da Autoavaliação de Saúde Mental. O empregado deverá fazer o print no final da avaliação para usar como evidência.</p>
+                                <p>Faltas não justificadas resultam em penalização da pontuação da equipe. É importante manter a comunicação com a liderança em caso de impossibilidade de participação.</p>
+                            </div>
+                            <div class="image-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>Imagem de exemplo</p>
+                                <p class="subtitle">Adicione aqui uma imagem demonstrando como fazer esta atividade</p>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- FAQ Item 11 -->
+                <div class="faq-item" data-category="penalizador">
+                    <input type="checkbox" id="faq11" class="accordion-checkbox">
+                    <label for="faq11" class="faq-header">
+                        <div class="faq-header-content">
+                            <div class="faq-icon penalizador">⚠️</div>
+                            <div class="faq-title">
+                                <h3>Não Cumprimento de Metas</h3>
+                                <span class="badge badge-penalizador">Penalizador</span>
+                            </div>
+                        </div>
+                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </label>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            <div class="question-box">
+                                <h4>Pergunta:</h4>
+                                <p>O que acontece quando não cumpro as metas estabelecidas?</p>
+                            </div>
+                            <div class="answer-box">
+                                <h4>Resposta:</h4>
+                                <p>O não cumprimento das metas dos indicadores padrão resulta em penalização. É importante buscar cumprir todos os indicadores dentro do prazo estabelecido.</p>
+                            </div>
+                            <div class="image-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>Imagem de exemplo</p>
+                                <p class="subtitle">Adicione aqui uma imagem demonstrando como fazer esta atividade</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
+            <!-- Links importantes -->
             <div class="links-section">
                 <h2>Links Importantes</h2>
                 <p class="subtitle">Acesse as plataformas necessárias para o programa</p>
@@ -816,8 +997,7 @@
                 <div class="link-item">
                     <h4>Aplicativo Medicina App - Ergonomia Online</h4>
                     <p>Para registrar pausas do almoço e pausas psicofisiológicas</p>
-                    <a href="https://apps.powerapps.com/play/e/default-7893571b-6c2c-4cef-b4da-7d4b266a0626/a/fb5dcd3a-c6e0-4fe6-81b6-c72ac260261a?tenantId=7893571b-6c2c-4cef-b4da-7d4b266a0626&hint=1e3b12ff-eda4-4f32-8a80-2ec2a44cb62b&sourcetime=portal&hidenavbar=true" 
-                           class="link-btn" target="_blank" rel="noopener noreferrer">
+                    <a href="https://apps.powerapps.com/play/e/default-7893571b-6c2c-4cef-b4da-7d4b266a0626/a/fb5dcd3a-c6e0-4fe6-81b6-c72ac260261a?tenantId=7893571b-6c2c-4cef-b4da-7d4b266a0626&hint=1e3b12ff-eda4-4f32-8a80-2ec2a44cb62b&sourcetime=portal&hidenavbar=true" class="link-btn" target="_blank" rel="noopener noreferrer">
                         Acessar Aplicativo
                     </a>
                 </div>
@@ -830,9 +1010,10 @@
         </div>
     </div>
 
+    <!-- Footer -->
     <div class="footer">
         <h3>Desafio Viva+</h3>
         <p>Promovendo saúde e bem-estar no ambiente de trabalho</p>
     </div>
 </body>
-</html>`;
+</html>

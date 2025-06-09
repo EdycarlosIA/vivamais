@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -277,7 +276,6 @@
 
         .question-box h4 {
             font-weight: 600;
-            color: #374151;
             margin-bottom: 0.5rem;
         }
 
@@ -402,6 +400,73 @@
             color: #9ca3af;
         }
 
+        .important-notice {
+            background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 10%, #fef3c7 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .important-notice h2 {
+            color: #92400e;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .important-notice p {
+            color: #92400e;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .vacation-section {
+            color: #2563eb;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .medical-section {
+            color: #dc2626;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .important-notice h4 {
+            color: #059669;
+            font-weight: 600;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .important-notice ul {
+            margin: 0.5rem 0 1rem 1.5rem;
+            color: #374151;
+        }
+
+        .important-notice li {
+            margin-bottom: 0.25rem;
+            line-height: 1.5;
+        }
+
+        .important-notice strong {
+            color: #dc2626;
+            font-weight: 700;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
@@ -437,6 +502,34 @@
         <p class="description">
             Iniciativa para promover atividades saudáveis e fomentar o bem-estar entre os membros da equipe.
         </p>
+    </div>
+
+    <!-- Important Notice Section -->
+    <div class="important-notice">
+        <h2>⚠️ Observações Importantes</h2>
+        <p>Em caso de férias e atestados, sinalizar a equipe de administradores do programa. Segue os indicadores liberados e obrigatórios no período de férias:</p>
+        
+        <h3 class="vacation-section">🏖️ Férias:</h3>
+        
+        <h4>Indicadores liberados de evidenciar:</h4>
+        <ul>
+            <li>Check-up de saúde (Minabot)</li>
+            <li>Pausa do Almoço (App ergonomia)</li>
+            <li>Pausa Psicofisiológica (App ergonomia)</li>
+            <li>Atividade em Grupo</li>
+            <li>Atividade quinzenal surpresa</li>
+        </ul>
+        
+        <h4>Indicadores obrigatórios mesmo nas férias:</h4>
+        <ul>
+            <li>Realizar atividade física 3x na semana</li>
+            <li>Postar 3x saudáveis</li>
+            <li>30 minutos de caminhada por semana</li>
+            <li>Praticar um hobby</li>
+        </ul>
+        
+        <h3 class="medical-section">🏥 Atestados:</h3>
+        <p><strong>Todos os indicadores liberados.</strong></p>
     </div>
 
     <div class="container">
@@ -505,9 +598,12 @@
 (Entendimento de semana: Inicia toda segunda-feira e encerra aos domingos)</p>
                             </div>
                             <div class="image-placeholder">
-                                
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p>Imagem de exemplo</p>
+                                <p class="subtitle">Adicione aqui uma imagem demonstrando como fazer esta atividade</p>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
